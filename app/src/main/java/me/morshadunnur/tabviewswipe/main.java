@@ -1,12 +1,13 @@
 package me.morshadunnur.tabviewswipe;
 
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
-public class main extends AppCompatActivity implements ActionBar.TabListener{
+public abstract class main extends ActionBarActivity implements ActionBar.TabListener{
     TabsPagerAdapter mAdapter;
     ViewPager pager;
     ActionBar actionBar;
@@ -31,20 +32,40 @@ public class main extends AppCompatActivity implements ActionBar.TabListener{
         for (String tab_name:titles){
             actionBar.addTab(actionBar.newTab().setText(tab_name).setTabListener(this));
         }
+
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+        pager.setCurrentItem(tab.getPosition());
+
     }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+    public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
 
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
 
     }
 }
